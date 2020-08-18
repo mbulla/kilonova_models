@@ -40,5 +40,3 @@ iwave=1  wave	  flux      flux   ..........
 - Time bins have step size Dt = (t_f - t_i) / Ntime
 - Reference times are [t_i + 0.5 * Dt, t_i + 1.5 * Dt, ...]
 - Fluxes are given in erg s-1 cm-2 A-1 at the distance of 10 pc
-- Opang=0 is a one-component model with lanthanide-poor opacities, 
-  opang=90 a one-component model with lanthanide-rich opacities
