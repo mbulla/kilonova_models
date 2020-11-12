@@ -1,8 +1,6 @@
-# Validation tests for polarization
+# VALIDATION TESTS FOR POLARIZATION
 
-These includes code validation tests for polarization. 
-
-The tests are computed assuming the geometry described in Hillier (1994) as explained in Bulla, Sim & Kromer (2015). The geometry is shown in geometry.pdf.
+This directory includes POSSIS validation tests for polarization. The tests are computed assuming the geometry described in Hillier (1994) as explained in Bulla, Sim & Kromer (2015). The geometry is shown in geometry.pdf.
 
 # Numerical solutions in the optically-thick regime
 pol_tau.pdf shows Fig. 5 of Bulla, Sim & Kromer (2015), where the results from POSSIS (symbols) are compared to the numerical simulations in Hillier (1994, lines). See Section 3.1 of Bulla, Sim & Kromer (2015) for more details.
