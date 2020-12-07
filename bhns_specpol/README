@@ -1,0 +1,25 @@
+Polarization spectra published in "Polarized kilonovae from black hole-neutron star mergers", Bulla et al. (2021)
+
+Feel free to use these models and cite the relevant publications listed in citations.bib
+
+1) FILENAME
+
+BHNS-X_Y.txt
+X: model (Dyn/DynWind)
+Y: viewing angle (see Fig. 3 and Fig. 4 of Bulla et al. 2021)
+
+2) FILE FORMAT
+
+One file each model each viewing angle
+
+##########################################################################
+
+#################### iobs = 0 ############################################
+                 itime=0   itime=0   itime=1   itime=1   itime=2   itime=2
+                 (1.5 d)   (1.5 d)   (2.5 d)   (2.5 d)   (3.5 d)   (3.5 d)
+iwave=0  wave	   q/i       u/i       q/i       u/i       q/i       u/i   
+iwave=1  wave	   q/i       u/i       q/i       u/i       q/i       u/i     
+.         .         .         .         .         .         .         .   
+.         .         .         .         .         .         .         .   
+.         .         .         .         .         .         .         .   
+.         .         .         .         .         .         .         .   
