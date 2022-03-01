@@ -54,7 +54,7 @@ for kk,filename in enumerate(files):
             tf = float(ii.split()[2])
         l+=1
 
-    step_time = (np.log(tf) - np.log(ti)) / (float(Ntime) - 1);
+    step_time = (tf - ti) / float(Ntime);
     a = np.genfromtxt(os.path.join(args.modeldir,filename),skip_header=3)
 
     cos = np.linspace(0,1,Nobs)
@@ -71,10 +71,10 @@ for kk,filename in enumerate(files):
             for i in range(0,Ntime):
                 
                 if ifilt == 0:
-                    time = np.exp(np.log(ti) + i * step_time)
+                    time = ti + step_time * (i + 0.5)
                     ph.append(time)
                 
-                I = a[Nwave*obs:Nwave*(obs+1),1+i*3] * (1./dMpc)**2
+                I = a[Nwave*obs:Nwave*(obs+1),1+i] * (1e-5/dMpc)**2
                 fl[i] = I
             
             ph = np.array(ph)
@@ -82,7 +82,7 @@ for kk,filename in enumerate(files):
 
         # extract photometric lightcurves
         if args.doAB:
-            lc = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta:.2f}.dat'),'w')
+            lc = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}.dat'),'w')
             lc.write(f'# t[days] {" ".join(filters)} \n')
             m_tot = []
             
@@ -109,7 +109,7 @@ for kk,filename in enumerate(files):
 
         # extract bolometric lightcurves
         if args.doLbol:
-            Lbol_f = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta:.2f}_Lbol.dat'),'w')
+            Lbol_f = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}_Lbol.dat'),'w')
             Lbol_f.write('# t[days] Lbol[erg/s] \n')
 
             Lbol = np.trapz(fl*(4*np.pi*D_cm**2),x=wave)
