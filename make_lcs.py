@@ -33,7 +33,7 @@ files = [f for f in os.listdir(args.modeldir) if 'txt' in f]
 numfiles = len(files)
 
 dMpc = args.dMpc
-D_cm = 10*3.0857e16*100 # 10 pc in cm
+D_cm = dMpc * 1e6 * 3.0857e18  
 H0 = 73
 CLIGHT = 2.99792458e5
 z = H0 * dMpc / CLIGHT
@@ -74,7 +74,7 @@ for kk,filename in enumerate(files):
                     time = ti + step_time * (i + 0.5)
                     ph.append(time)
                 
-                I = a[Nwave*obs:Nwave*(obs+1),1+i] * (1e-5/dMpc)**2
+                I = a[Nwave*obs:Nwave*(obs+1),1+i] * (1e-5/dMpc)**2 / (1+z)
                 fl[i] = I
             
             ph = np.array(ph)
