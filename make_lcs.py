@@ -6,6 +6,7 @@ import sncosmo
 from scipy.signal import savgol_filter
 import argparse
 from scipy.interpolate import interpolate as interp
+from astropy.cosmology import Planck18 as cosmo
 
 def parse():
     parser = argparse.ArgumentParser()
@@ -18,6 +19,7 @@ def parse():
     parser.add_argument('--doAB',help='extract photometric lightcurves',action="store_true",default=False)
     #parser.add_argument('--doSmoothing',help='Employ Savitzky-Golay filter for smoothing',action="store_true",default=False)
     parser.add_argument('--dMpc',type=float,help='distance in Mpc, default is 10 pc to get lightcurves in Absolute Mag',default=1e-5)
+    parser.add_argument('--z', type=float, help='redshift, if provided it dominates over dMpc',default=None)
 
     return parser.parse_args()
 
@@ -32,11 +34,16 @@ if not args.doAB and not args.doLbol:
 files = [f for f in os.listdir(args.modeldir) if 'txt' in f]
 numfiles = len(files)
 
-dMpc = args.dMpc
-D_cm = dMpc * 1e6 * 3.0857e18  
-H0 = 73
-CLIGHT = 2.99792458e5
-z = H0 * dMpc / CLIGHT
+# Use redshift or dMpc if z is not provided
+if args.z is None:
+    dMpc = args.dMpc
+    D_cm = dMpc*3.0857e16*100 # 10 pc in cm
+    H0 = cosmo.H0.value
+    CLIGHT = 2.99792458e5
+    z = H0 * dMpc / CLIGHT
+else:
+    z = args.z
+    dMpc = cosmo.luminosity_distance(z).to("Mpc").value
 
 for kk,filename in enumerate(files):
     if kk % 10 == 0: print(f'{kk * 100 / numfiles:.2f}% done')
@@ -82,7 +89,11 @@ for kk,filename in enumerate(files):
 
         # extract photometric lightcurves
         if args.doAB:
-            lc = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}.dat'),'w')
+            if args.z is not None:
+                lc = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_z{z}.dat'),'w')
+            else:
+                lc = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_dMpc{int(dMpc)}.dat'),'w')
+            
             lc.write(f'# t[days] {" ".join(filters)} \n')
             m_tot = []
             
@@ -109,7 +120,11 @@ for kk,filename in enumerate(files):
 
         # extract bolometric lightcurves
         if args.doLbol:
-            Lbol_f = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}_Lbol.dat'),'w')
+            if args.z is not None:
+                Lbol_f = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_z{z}_Lbol.dat'),'w')
+            else:
+                Lbol_f = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_dMpc{int(dMpc)}_Lbol.dat'),'w')
+            
             Lbol_f.write('# t[days] Lbol[erg/s] \n')
 
             Lbol = np.trapz(fl*(4*np.pi*D_cm**2),x=wave)
