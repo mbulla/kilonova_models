@@ -90,9 +90,9 @@ for kk,filename in enumerate(files):
         # extract photometric lightcurves
         if args.doAB:
             if args.z is not None:
-                lc = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_z{z}.dat'),'w')
+                lc = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}_z{z}.dat'),'w')
             else:
-                lc = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_dMpc{int(dMpc)}.dat'),'w')
+                lc = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}_dMpc{int(dMpc)}.dat'),'w')
             
             lc.write(f'# t[days] {" ".join(filters)} \n')
             m_tot = []
@@ -121,9 +121,9 @@ for kk,filename in enumerate(files):
         # extract bolometric lightcurves
         if args.doLbol:
             if args.z is not None:
-                Lbol_f = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_z{z}_Lbol.dat'),'w')
+                Lbol_f = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}_z{z}_Lbol.dat'),'w')
             else:
-                Lbol_f = open(os.path.join(lcdir,f'{filename[:-9]}_theta{theta[obs]:.2f}_dMpc{int(dMpc)}_Lbol.dat'),'w')
+                Lbol_f = open(os.path.join(lcdir,f'{filename[:-4]}_theta{theta:.2f}_dMpc{int(dMpc)}_Lbol.dat'),'w')
             
             Lbol_f.write('# t[days] Lbol[erg/s] \n')
 
