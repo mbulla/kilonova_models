@@ -10,7 +10,7 @@ from astropy.cosmology import Planck18 as cosmo
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--filters',type=str,default='sdss::u,sdss::g,sdss::r,sdss::i,sdss::z,swope2::y,swope2::J,swope2::H,cspk,bessellux,bessellb,bessellv,bessellr,besselli',
+    parser.add_argument('--filters',type=str,default='sdss::u,sdss::g,sdss::r,sdss::i,sdss::z,swope2::y,swope2::J,swope2::H,cspk,bessellux,bessellb,bessellv,bessellr,besselli,uvot::b,uvot::u,uvot::uvm2,uvot::uvw1,uvot::uv,uvot::v,uvot::white',
     help='comma-separated list of filters for photometric lcs; must be from the bandpasses listed here: \
     https://sncosmo.readthedocs.io/en/stable/bandpass-list.html')
     parser.add_argument('--modeldir',type=str,help='directory where .txt files are located',default='model/')
